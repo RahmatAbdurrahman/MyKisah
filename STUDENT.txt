@@ -18,3 +18,6 @@ Tile layers:
 ## Push Notification
 VAPID Public Key: BCCs2eonMI-6H2ctvFaWg-UYdDv387Nt5oyR3OtlYFWinAVH3libN1gN9Rg-bFNbG5-r6VtcRi0N2bBqKf9Vn4
 Sumber: Dicoding Story API — https://story-api.dicoding.dev/v1
+
+## Netlify Link
+https://mykisahapp.netlify.app/
