@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MyKisah — Platform berbagi cerita dari seluruh penjuru dunia" />
+    <meta name="theme-color" content="#e8a530" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MyKisah" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <title>Kisah — Berbagi Cerita</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+    <script type="module" src="/scripts/index.js"></script>
+  </head>
+  <body>
+    <!-- Skip to Content -->
+    <a href="#main-content" id="skip-link" class="skip-link">Langsung ke konten utama</a>
+
+    <!-- Toast Container -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Install Banner -->
+    <div id="install-banner" class="install-banner hidden" role="complementary" aria-label="Pasang aplikasi">
+      <div class="install-banner-content">
+        <img src="/icons/icon-72x72.png" alt="" width="36" height="36" aria-hidden="true" />
+        <div>
+          <p class="install-banner-title">Pasang Kisah</p>
+          <p class="install-banner-sub">Akses cepat tanpa browser</p>
+        </div>
+      </div>
+      <div class="install-banner-actions">
+        <button id="btn-install" class="btn btn-primary btn-sm">Pasang</button>
+        <button id="btn-install-dismiss" class="btn btn-ghost btn-sm" aria-label="Tutup banner">✕</button>
+      </div>
+    </div>
+
+    <header role="banner">
+      <div class="main-header container">
+        <a class="brand-name" href="#/" aria-label="MyKisah — Halaman Utama">MyKisah</a>
+
+        <nav id="navigation-drawer" class="navigation-drawer" aria-label="Navigasi utama">
+          <ul id="nav-list" class="nav-list" role="list">
+            <li><a href="#/" id="nav-home" class="nav-link">Beranda</a></li>
+            <li><a href="#/add" id="nav-add" class="nav-link">Tambah Cerita</a></li>
+            <li><a href="#/saved" id="nav-saved" class="nav-link">Tersimpan</a></li>
+            <li id="nav-auth-item">
+              <a href="#/login" id="nav-login" class="nav-link">Masuk</a>
+            </li>
+            <li id="nav-logout-item" class="hidden">
+              <button class="btn-nav-logout" id="btn-logout" type="button">Keluar</button>
+            </li>
+          </ul>
+        </nav>
+
+        <button id="drawer-button" class="drawer-button"
+          aria-label="Toggle menu navigasi" aria-expanded="false" aria-controls="navigation-drawer">☰</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content" tabindex="-1" aria-label="Konten utama"></main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  </body>
+</html>

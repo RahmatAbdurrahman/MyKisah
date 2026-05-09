@@ -1,0 +1,20 @@
+# MyKisah — Story Sharing
+
+## Fitur
+1. SPA + View Transitions API (custom transition)
+2. Peta interaktif (Leaflet) dengan 3 tile layers
+3. Tambah cerita (foto kamera/upload, lokasi via klik peta)
+4. Push Notification (subscribe/unsubscribe toggle)
+5. PWA: installable, offline shell + data caching, background sync
+6. IndexedDB: simpan/hapus/cari cerita offline, pending queue sync
+
+## Map API Keys
+Menggunakan Leaflet.js (open-source, tidak perlu API key).
+Tile layers:
+  1. OpenStreetMap  — https://tile.openstreetmap.org
+  2. CartoDB Dark   — https://basemaps.cartocdn.com
+  3. Esri Satellite — https://server.arcgisonline.com
+
+## Push Notification
+VAPID Public Key: BCCs2eonMI-6H2ctvFaWg-UYdDv387Nt5oyR3OtlYFWinAVH3libN1gN9Rg-bFNbG5-r6VtcRi0N2bBqKf9Vn4
+Sumber: Dicoding Story API — https://story-api.dicoding.dev/v1
