@@ -1,5 +1,5 @@
 {
-  "name": "Kisah — Berbagi Cerita",
+  "name": "MyKisah-Berbagi Cerita",
   "short_name": "Kisah",
   "description": "Platform berbagi cerita dari seluruh penjuru dunia dengan fitur peta interaktif",
   "start_url": "/",
@@ -22,22 +22,7 @@
     { "src": "/icons/icon-384x384.png", "sizes": "384x384", "type": "image/png", "purpose": "maskable any" },
     { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Halaman Beranda Kisah (Desktop)"
-    },
-    {
-      "src": "/screenshots/mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Halaman Beranda Kisah (Mobile)"
-    }
-  ],
+
   "shortcuts": [
     {
       "name": "Tambah Cerita",

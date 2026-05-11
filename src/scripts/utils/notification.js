@@ -35,11 +35,33 @@ export async function requestNotificationPermission() {
 
 /* ---- Subscribe ---- */
 export async function subscribePushNotification(registration) {
-  const sub = await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(CONFIG.VAPID_PUBLIC_KEY),
-  });
+  try {
+    const sub = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(CONFIG.VAPID_PUBLIC_KEY),
+    });
+    return await _sendSubToServer(sub);
+  } catch (err) {
+    // Tangani error jika ada subscription lama dengan VAPID key yang berbeda (Sisa project sebelumnya)
+    if (err.name === 'InvalidStateError' || err.message.includes('applicationServerKey is not valid')) {
+      console.warn('[Push] Ada subscription lama yang bentrok. Membersihkan...');
+      
+      const oldSub = await registration.pushManager.getSubscription();
+      if (oldSub) await oldSub.unsubscribe();
+      
+      // Coba subscribe ulang setelah bersih
+      const newSub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(CONFIG.VAPID_PUBLIC_KEY),
+      });
+      return await _sendSubToServer(newSub);
+    }
+    throw err;
+  }
+}
 
+/* ---- Helper Send Sub to Server ---- */
+async function _sendSubToServer(sub) {
   const token  = localStorage.getItem('kisah_token');
 
   // Use base64url encoding (no +/=) for compatibility with the API
@@ -70,8 +92,6 @@ export async function unsubscribePushNotification(registration) {
   if (!sub) return;
 
   const token  = localStorage.getItem('kisah_token');
-  const p256dh = arrayBufferToBase64(sub.getKey('p256dh'));
-  const auth   = arrayBufferToBase64(sub.getKey('auth'));
 
   await fetch(UNSUBSCRIBE_URL, {
     method:  'DELETE',
@@ -81,7 +101,6 @@ export async function unsubscribePushNotification(registration) {
     },
     body: JSON.stringify({
       endpoint: sub.endpoint,
-      keys: { p256dh, auth },
     }),
   }).catch((e) => console.warn('[Push] Unsubscribe API error:', e));
 

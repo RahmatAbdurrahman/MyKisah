@@ -1,12 +1,4 @@
-/* ================================================================
-   SERVICE WORKER — Kisah PWA
-   Cache Strategies:
-   - App Shell  → Cache First
-   - API GET    → Stale-While-Revalidate  (dynamic data stays fresh)
-   - Images     → Cache First with network fallback
-================================================================ */
-
-const APP_VERSION   = 'v3';
+const APP_VERSION   = 'v4'; // Versi diubah ke v4 agar service worker memperbarui cache
 const CACHE_SHELL   = `kisah-shell-${APP_VERSION}`;
 const CACHE_DYNAMIC = `kisah-dynamic-${APP_VERSION}`;
 const CACHE_IMAGES  = `kisah-images-${APP_VERSION}`;
@@ -52,9 +44,9 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   if (!['http:', 'https:'].includes(url.protocol)) return;
 
-  /* API calls → Stale-While-Revalidate */
+  /* API calls → Network First (Agar auto-update langsung jalan) */
   if (url.href.startsWith(API_BASE)) {
-    event.respondWith(staleWhileRevalidate(CACHE_DYNAMIC, request));
+    event.respondWith(networkFirst(CACHE_DYNAMIC, request));
     return;
   }
 
@@ -87,23 +79,22 @@ async function cacheFirst(cacheName, request, fallbackIndex = false) {
   }
 }
 
-async function staleWhileRevalidate(cacheName, request) {
-  const cache  = await caches.open(cacheName);
-  const cached = await cache.match(request);
-
-  const fetchPromise = fetch(request)
-    .then((response) => {
-      if (response.ok) cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => null);
-
-  return cached
-    || await fetchPromise
-    || new Response(
-      JSON.stringify({ error: true, message: 'Data tidak tersedia secara offline' }),
+async function networkFirst(cacheName, request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    return new Response(
+      JSON.stringify({ error: true, message: 'Offline — data tidak tersedia' }),
       { status: 503, headers: { 'Content-Type': 'application/json' } }
     );
+  }
 }
 
 /* ================================================================
